@@ -39,40 +39,58 @@ This project is a .NET Core Todo API built using Clean Architecture principles. 
 ## Setup Instructions
 
 1. Clone the repository:
-   ```
+   ```sh
    git clone <repository-url>
    ```
 
-2. Navigate to the project directory:
-   ```
-   cd TodoApi
-   ```
+### Authenticate and get JWT token
 
-3. Restore the dependencies:
-   ```
-   dotnet restore
-   ```
+4. Copy the JWT token from the response.
+5. Replace the `{{jwt_token}}` placeholder in the [requests.http](http://_vscodecontentref_/5) file with the actual JWT token.
+6. Send requests to the API endpoints by clicking on the "Send Request" link above each request in the [requests.http](http://_vscodecontentref_/6) file.
 
-4. Run the application:
-   ```
-   dotnet run --project src/TodoApi/TodoApi.csproj
-   ```
+### Example [requests.http](http://_vscodecontentref_/7) File
 
-5. Use tools like Postman or curl to interact with the API endpoints.
+```http
+### Get all todos
+GET http://localhost:5000/api/todos
+Authorization: Bearer {{jwt_token}}
 
-## Usage
+###
 
-- **Authentication**: Obtain a JWT token by authenticating a user.
-- **Todo Endpoints**:
-  - `GET /todos`: Retrieve all todos.
-  - `POST /todos`: Create a new todo.
-  - `PUT /todos/{id}`: Update an existing todo.
-  - `DELETE /todos/{id}`: Delete a todo.
+### Create a new todo
+POST http://localhost:5000/api/todos
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
 
-## Contributing
+{
+  "title": "New Todo"
+}
 
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
+###
 
-## License
+### Update an existing todo
+PUT http://localhost:5000/api/todos/1
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+{
+  "title": "Updated Todo"
+}
+
+###
+
+### Delete a todo
+DELETE http://localhost:5000/api/todos/1
+Authorization: Bearer {{jwt_token}}
+
+###
+
+### Authenticate and get JWT token
+POST http://localhost:5000/api/authenticate
+Content-Type: application/json
+
+{
+  "username": "your_username",
+  "password": "your_password"
+}
