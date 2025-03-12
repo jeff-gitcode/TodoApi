@@ -1,7 +1,9 @@
+using Application.Interfaces;
 using Domain.Entities;
 using Infrastructure.Persistence;
-using Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
@@ -16,31 +18,29 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<TodoItem>> GetAllTodosAsync()
         {
-            // Return all TodoItems from the database if null return empty list
-            return _context.TodoItems != null ? await _context.TodoItems.ToListAsync() : new List<TodoItem>();
+            return await _context.TodoItems.ToListAsync();
         }
 
-        public async Task<TodoItem> GetTodoByIdAsync(int id)
+        public async Task<TodoItem?> GetTodoByIdAsync(int id)
         {
-            var todoItem = await _context.TodoItems.FindAsync(id);
-            if (todoItem == null)
-            {
-                throw new KeyNotFoundException($"TodoItem with id {id} not found.");
-            }
-            return todoItem;
+            return await _context.TodoItems.FindAsync(id);
         }
 
-        public async Task<int> AddTodoAsync(TodoItem todoItem)
+        public async Task<TodoItem> AddTodoAsync(TodoItem todoItem)
         {
-            await _context.TodoItems.AddAsync(todoItem);
+            _context.TodoItems.Add(todoItem);
             await _context.SaveChangesAsync();
-            return todoItem.Id;
+            return todoItem;
         }
 
         public async Task UpdateTodoAsync(TodoItem todoItem)
         {
-            _context.TodoItems.Update(todoItem);
-            await _context.SaveChangesAsync();
+            var existingTodo = await _context.TodoItems.FindAsync(todoItem.Id);
+            if (existingTodo != null)
+            {
+                _context.Entry(existingTodo).CurrentValues.SetValues(todoItem);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteTodoAsync(int id)

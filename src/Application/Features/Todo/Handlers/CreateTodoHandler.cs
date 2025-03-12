@@ -17,17 +17,12 @@ namespace Application.Features.Todo.Handlers
 
         public async Task<TodoItemDto> Handle(CreateTodoCommand request, CancellationToken cancellationToken)
         {
-            var todoItem = new CreateTodoDto
+            var todoItem = new TodoItemDto
             {
                 Title = request.Title
             };
 
-            var createdTodo = await _todoService.CreateTodoAsync(todoItem);
-            return new TodoItemDto
-            {
-                Id = createdTodo.Id,
-                Title = createdTodo.Title
-            };
+            return await _todoService.CreateTodoAsync(todoItem);
         }
     }
 }

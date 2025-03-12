@@ -1,6 +1,10 @@
+using Application.DTOs;
+using Application.Features.Todo.Queries;
 using Application.Interfaces;
 using Domain.Entities;
-using Application.DTOs;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Application.Services
 {
@@ -13,38 +17,54 @@ namespace Application.Services
             _todoRepository = todoRepository;
         }
 
-        public async Task<IEnumerable<TodoItem>> GetAllTodosAsync()
+        public async Task<IEnumerable<TodoItemDto>> GetAllTodosAsync()
         {
-            return await _todoRepository.GetAllTodosAsync();
-        }
-
-        public async Task<TodoItem> GetTodoByIdAsync(int id)
-        {
-            return await _todoRepository.GetTodoByIdAsync(id);
-        }
-
-        public async Task<TodoItem> CreateTodoAsync(CreateTodoDto createTodoDto)
-        {
-            var todoItem = new TodoItem
+            var todos = await _todoRepository.GetAllTodosAsync();
+            return todos.Select(t => new TodoItemDto
             {
-                Title = createTodoDto.Title
+                Id = t.Id,
+                Title = t.Title,
+            }).ToList();
+        }
+
+        public async Task<TodoItemDto?> GetTodoByIdAsync(int id)
+        {
+            var todo = await _todoRepository.GetTodoByIdAsync(id);
+            if (todo == null)
+            {
+                return null;
+            }
+
+            return new TodoItemDto
+            {
+                Id = todo.Id,
+                Title = todo.Title,
+            };
+        }
+
+        public async Task<TodoItemDto> CreateTodoAsync(TodoItemDto todoItemDto)
+        {
+            var todo = new TodoItem
+            {
+                Title = todoItemDto.Title,
             };
 
-            var id = await _todoRepository.AddTodoAsync(todoItem);
+            todo = await _todoRepository.AddTodoAsync(todo);
 
-            todoItem.Id = id;
-            return todoItem;
+            todoItemDto.Id = todo.Id;
+
+            return todoItemDto;
         }
 
-        public async Task UpdateTodoAsync(UpdateTodoDto updateTodoDto)
+        public async Task UpdateTodoAsync(TodoItemDto todoItemDto)
         {
-            var todoItem = new TodoItem
+            var todo = new TodoItem
             {
-                Id = updateTodoDto.Id,
-                Title = updateTodoDto.Title
+                Id = todoItemDto.Id,
+                Title = todoItemDto.Title,
             };
 
-            await _todoRepository.UpdateTodoAsync(todoItem);
+            await _todoRepository.UpdateTodoAsync(todo);
         }
 
         public async Task DeleteTodoAsync(int id)

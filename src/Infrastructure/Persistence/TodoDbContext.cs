@@ -19,6 +19,7 @@ namespace Infrastructure.Persistence
             {
                 entity.ToTable("Todo");
                 entity.HasKey(t => t.Id);
+                entity.Property(t => t.Id).ValueGeneratedOnAdd(); // Auto-increment
                 entity.Property(t => t.Title).IsRequired().HasMaxLength(100);
             });
         }

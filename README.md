@@ -90,6 +90,8 @@ dotnet add src/TodoApi/TodoApi.csproj package Swashbuckle.AspNetCore
 dotnet tool install --global dotnet-ef
 dotnet ef migrations add CreateTodoTable --project src/Infrastructure/Infrastructure.csproj
 dotnet ef database update --project src/Infrastructure/Infrastructure.csproj
+// undo this action
+dotnet ef migrations remove 
 ````
 
 ## Setup Instructions
