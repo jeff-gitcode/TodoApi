@@ -13,13 +13,14 @@ namespace Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<TodoItem>()
-                .HasKey(t => t.Id);
+            base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<TodoItem>()
-                .Property(t => t.Title)
-                .IsRequired()
-                .HasMaxLength(100);
+            modelBuilder.Entity<TodoItem>(entity =>
+            {
+                entity.ToTable("Todo");
+                entity.HasKey(t => t.Id);
+                entity.Property(t => t.Title).IsRequired().HasMaxLength(100);
+            });
         }
     }
 }

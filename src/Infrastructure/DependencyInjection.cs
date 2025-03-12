@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Infrastructure.Persistence;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
@@ -14,10 +15,14 @@ namespace Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<TodoDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<ITodoRepository, TodoRepository>();
-            services.AddScoped<IJwtService, JwtService>();
+            // Configure JwtService with parameters from configuration
+            var jwtSecret = configuration["Jwt:Key"];
+            var jwtExpiryDuration = double.Parse(configuration["Jwt:ExpiryDuration"]);
+            services.AddScoped<IJwtService>(provider => new JwtService(jwtSecret, jwtExpiryDuration));
+
 
             return services;
         }

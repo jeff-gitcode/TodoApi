@@ -16,7 +16,8 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<TodoItem>> GetAllTodosAsync()
         {
-            return await _context.TodoItems.ToListAsync();
+            // Return all TodoItems from the database if null return empty list
+            return _context.TodoItems != null ? await _context.TodoItems.ToListAsync() : new List<TodoItem>();
         }
 
         public async Task<TodoItem> GetTodoByIdAsync(int id)

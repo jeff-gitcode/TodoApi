@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace Infrastructure.Persistence
 {
@@ -14,7 +15,7 @@ namespace Infrastructure.Persistence
                 .Build();
 
             var optionsBuilder = new DbContextOptionsBuilder<TodoDbContext>();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+            optionsBuilder.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
 
             return new TodoDbContext(optionsBuilder.Options);
         }

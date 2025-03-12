@@ -1,3 +1,4 @@
+using FluentValidation;
 using MediatR;
 
 namespace Application.Features.Todo.Queries
@@ -6,11 +7,18 @@ namespace Application.Features.Todo.Queries
     {
     }
 
+    public class GetTodosQueryValidator : AbstractValidator<GetTodosQuery>
+    {
+        public GetTodosQueryValidator()
+        {
+            // Add validation rules here if needed
+        }
+    }
+
+
     public class TodoItemDto
     {
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        public string Status { get; set; } = string.Empty;
     }
 }

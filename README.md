@@ -36,6 +36,62 @@ This project is a .NET Core Todo API built using Clean Architecture principles. 
 
 - **tests**: Contains unit tests for the application.
 
+## Solution Creation
+````
+mkdir TodoApi
+cd TodoApi
+dotnet new sln -n TodoApi
+
+mkdir src
+mkdir tests
+
+cd src
+dotnet new classlib -n Domain
+dotnet new classlib -n Application
+dotnet new classlib -n Infrastructure
+dotnet new webapi -n TodoApi
+
+cd ../tests
+dotnet new xunit -n Domain.Tests
+dotnet new xunit -n Application.Tests
+dotnet new xunit -n Infrastructure.Tests
+
+cd ..
+dotnet sln TodoApi.sln add src/Domain/Domain.csproj
+dotnet sln TodoApi.sln add src/Application/Application.csproj
+dotnet sln TodoApi.sln add src/Infrastructure/Infrastructure.csproj
+dotnet sln TodoApi.sln add src/TodoApi/TodoApi.csproj
+dotnet sln TodoApi.sln add tests/Domain.Tests/Domain.Tests.csproj
+dotnet sln TodoApi.sln add tests/Application.Tests/Application.Tests.csproj
+dotnet sln TodoApi.sln add tests/Infrastructure.Tests/Infrastructure.Tests.csproj
+
+dotnet add src/Application/Application.csproj reference src/Domain/Domain.csproj
+dotnet add src/Infrastructure/Infrastructure.csproj reference src/Application/Application.csproj
+dotnet add src/Infrastructure/Infrastructure.csproj reference src/Domain/Domain.csproj
+dotnet add src/TodoApi/TodoApi.csproj reference src/Application/Application.csproj
+dotnet add src/TodoApi/TodoApi.csproj reference src/Infrastructure/Infrastructure.csproj
+
+# Add Necessary Packages:
+dotnet add src/Application/Application.csproj package MediatR.Extensions.Microsoft.DependencyInjection
+dotnet add src/Application/Application.csproj package FluentValidation
+dotnet add src/Application/Application.csproj package FluentValidation.DependencyInjectionExtensions
+
+dotnet add src/Infrastructure/Infrastructure.csproj package Microsoft.EntityFrameworkCore
+dotnet add src/Infrastructure/Infrastructure.csproj package Microsoft.EntityFrameworkCore.SqlServer
+dotnet add src/Infrastructure/Infrastructure.csproj package Microsoft.Extensions.Configuration
+dotnet add src/Infrastructure/Infrastructure.csproj package Microsoft.Extensions.Configuration.Json
+dotnet add src/Infrastructure/Infrastructure.csproj package Microsoft.Extensions.DependencyInjection
+dotnet add src/Infrastructure/Infrastructure.csproj package Microsoft.AspNetCore.Authentication.JwtBearer
+dotnet add src/Infrastructure/Infrastructure.csproj package System.IdentityModel.Tokens.Jwt
+
+dotnet add src/TodoApi/TodoApi.csproj package Swashbuckle.AspNetCore
+
+# create postgres db and table
+dotnet tool install --global dotnet-ef
+dotnet ef migrations add CreateTodoTable --project src/Infrastructure/Infrastructure.csproj
+dotnet ef database update --project src/Infrastructure/Infrastructure.csproj
+````
+
 ## Setup Instructions
 
 1. Clone the repository:

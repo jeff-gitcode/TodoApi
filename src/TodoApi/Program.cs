@@ -3,17 +3,13 @@ using Application;
 using Domain;
 using Infrastructure;
 using Microsoft.OpenApi.Models;
-using MediatR;
-using TodoApi.Extensions;
 using TodoApi.Middleware;
-using Application.Interfaces;
-using Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddApplication();
 builder.Services.AddDomain();
+builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddControllers();
@@ -29,9 +25,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-    app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TodoApi v1"));
 }
+
+app.UseSwagger();
+app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TodoApi v1"));
 
 app.UseMiddleware<JwtMiddleware>();
 

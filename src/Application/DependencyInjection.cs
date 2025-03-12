@@ -3,7 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using MediatR;
 using FluentValidation;
 using Application.Behaviors;
-using Application.Features.Todo.Commands;
+using Application.Services;
+using Application.Interfaces;
+using System.Reflection;
 
 namespace Application
 {
@@ -11,9 +13,11 @@ namespace Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddMediatR(typeof(CreateTodoCommand).Assembly);
-            services.AddValidatorsFromAssembly(typeof(CreateTodoCommand).Assembly);
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+            services.AddScoped<ITodoService, TodoService>();
 
             return services;
         }
