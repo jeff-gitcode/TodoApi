@@ -1,3 +1,8 @@
+// src/TodoApi/Program.cs
+using Application;
+using Domain;
+using Infrastructure;
+using Microsoft.OpenApi.Models;
 using MediatR;
 using TodoApi.Extensions;
 using TodoApi.Middleware;
@@ -7,15 +12,16 @@ using Infrastructure.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddApplication();
+builder.Services.AddDomain();
+builder.Services.AddInfrastructure(builder.Configuration);
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddMediatR(typeof(Program));
-builder.Services.AddApplicationServices(builder.Configuration["Jwt:Key"]);
-
-// Register IJwtService as scoped
-builder.Services.AddScoped<IJwtService>(provider =>
-    new JwtService(builder.Configuration["Jwt:Key"], double.Parse(builder.Configuration["Jwt:ExpiryDuration"] ?? "30")));
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "TodoApi", Version = "v1" });
+});
 
 var app = builder.Build();
 
@@ -24,7 +30,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TodoApi v1"));
 }
 
 app.UseMiddleware<JwtMiddleware>();

@@ -1,13 +1,12 @@
-using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Interfaces;
-using Application.DTOs;
+using MediatR;
 using Application.Features.Todo.Queries;
 
 namespace Application.Features.Todo.Handlers
 {
-    public class GetTodoByIdHandler : IRequestHandler<GetTodoByIdQuery, TodoItemDto>
+    public class GetTodoByIdHandler : IRequestHandler<GetTodoByIdQuery, TodoItemDto?>
     {
         private readonly ITodoService _todoService;
 
@@ -21,7 +20,7 @@ namespace Application.Features.Todo.Handlers
             var todo = await _todoService.GetTodoByIdAsync(request.Id);
             if (todo == null)
             {
-                return null;
+                throw new Exception($"Todo item with ID {request.Id} not found.");
             }
 
             return new TodoItemDto
