@@ -13,12 +13,12 @@ namespace Application.Services
             _todoRepository = todoRepository;
         }
 
-        public async Task<IEnumerable<TodoItem>> GetAllTodos()
+        public async Task<IEnumerable<TodoItem>> GetAllTodosAsync()
         {
             return await _todoRepository.GetAllTodosAsync();
         }
 
-        public async Task<TodoItem> GetTodoById(int id)
+        public async Task<TodoItem> GetTodoByIdAsync(int id)
         {
             return await _todoRepository.GetTodoByIdAsync(id);
         }
@@ -31,6 +31,7 @@ namespace Application.Services
             };
 
             var id = await _todoRepository.AddTodoAsync(todoItem);
+
             todoItem.Id = id;
             return todoItem;
         }

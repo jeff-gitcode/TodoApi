@@ -7,8 +7,8 @@ namespace Application.Interfaces
     {
         Task<IEnumerable<TodoItem>> GetAllTodosAsync();
         Task<TodoItem> GetTodoByIdAsync(int id);
-        Task CreateTodoAsync(CreateTodoDto createTodoDto);
-        Task UpdateTodoAsync(int id, UpdateTodoDto updateTodoDto);
+        Task<TodoItem> CreateTodoAsync(CreateTodoDto createTodoDto);
+        Task UpdateTodoAsync(UpdateTodoDto updateTodoDto);
         Task DeleteTodoAsync(int id);
     }
 }

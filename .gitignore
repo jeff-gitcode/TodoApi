@@ -1,1 +1,206 @@
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# User-specific files (Mono)
+*.userprefs
+
+# Mono Auto Generated Files
+mono_crash.*
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Ignore all dll files
+*.dll
+
+# Rider
+.idea/
+*.sln.iml
+*.iml
+*.iws
+
+# Miscellaneous
+*.nupkg
+*.snupkg
+*.tmp
+*.tmp_proj
+*.log
+
+# Packages folder (NuGet)
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+
+# Node modules (if any)
+node_modules/
+
+# Mac/Windows files
+*.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build artifacts
+*.exe
+*.dll
+*.pdb
+*.runtimeconfig.json
+*.runtimeconfig.dev.json
+
+# .NET Core project
+project.lock.json
+project.assets.json
+
+# Logs
+*.log
+*.tlog
+
+# Azure Pipelines
+*.coverage
+*.coveragexml
+
+# Coverage and testing
+TestResults/
+*.trx
+*.coverage
+
+# Intermediate files
+*.obj
+*.ipdb
+*.iobj
+*.pch
+*.pdb
+*.rsp
+*.sbr
+*.tlb
+*.tlh
+*.tli
+*.ilk
+
+# Visual Studio Code
+.vscode/
+
+# Local History for Visual Studio Code
+.history/
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Mac desktop service store files
+.DS_Store
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# Cake - Uncomment if you are using it
+# tools/**
+# !tools/packages.config
+
+# Tabs Studio
+*.tss
+
+# Telerik's JustMock configuration file
+*.jmconfig
+
+# BizTalk build output
+*.btp.cs
+*.btm.cs
+*.odx.cs
+*.xsd.cs
+
+# OpenCover UI analysis results
+OpenCover/
+
+# Azure Stream Analytics local run output
+ASALocalRun/
+
+# MSBuild Binary and Structured Log
+*.binlog
+
+# NVidia Nsight GPU debugger configuration file
+*.nvuser
+
+# MFractors (Xamarin productivity tool) working folder
+.mfractor/
+
+# Local History for Visual Studio
+.localhistory/
+
+# Entity Framework Core
+*.db
+*.db-shm
+*.db-wal
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# StyleCop
+StyleCopReport.xml
+
+# Files built by Visual Studio
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
+*.vspscc
+*.vssscc
+.builds
+
+# Custom
 .qodo
+
+# Apply to src/Domain project
+src/Domain/[Bb]in/
+src/Domain/[Oo]bj/
+src/Domain/*.dll
+src/Domain/*.exe
+src/Domain/*.pdb
+src/Domain/*.runtimeconfig.json
+src/Domain/*.runtimeconfig.dev.json
+src/Domain/*.log
+src/Domain/*.tlog
+src/Domain/*.tmp
+src/Domain/*.tmp_proj
+src/Domain/*.vspscc
+src/Domain/*.vssscc
+src/Domain/*.builds

@@ -20,14 +20,6 @@ namespace Infrastructure.Persistence
                 .Property(t => t.Title)
                 .IsRequired()
                 .HasMaxLength(100);
-
-            modelBuilder.Entity<TodoItem>()
-                .Property(t => t.Description)
-                .HasMaxLength(500);
-
-            modelBuilder.Entity<TodoItem>()
-                .Property(t => t.Status)
-                .IsRequired();
         }
     }
 }

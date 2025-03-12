@@ -21,7 +21,12 @@ namespace Infrastructure.Repositories
 
         public async Task<TodoItem> GetTodoByIdAsync(int id)
         {
-            return await _context.TodoItems.FindAsync(id);
+            var todoItem = await _context.TodoItems.FindAsync(id);
+            if (todoItem == null)
+            {
+                throw new KeyNotFoundException($"TodoItem with id {id} not found.");
+            }
+            return todoItem;
         }
 
         public async Task<int> AddTodoAsync(TodoItem todoItem)

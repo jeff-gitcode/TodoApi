@@ -20,8 +20,6 @@ namespace Application.Features.Todo.Handlers
             {
                 Id = todo.Id,
                 Title = todo.Title,
-                Description = todo.Description,
-                Status = "Completed"
             }).ToList();
         }
     }

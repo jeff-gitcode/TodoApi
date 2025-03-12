@@ -2,6 +2,7 @@ using MediatR;
 using Application.Interfaces;
 using Application.DTOs;
 using Application.Features.Todo.Commands;
+using Application.Features.Todo.Queries;
 
 namespace Application.Features.Todo.Handlers
 {
