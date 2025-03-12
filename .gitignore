@@ -30,6 +30,7 @@ mono_crash.*
 
 # Ignore all dll files
 *.dll
+*.pdb
 
 # Rider
 .idea/
@@ -187,3 +188,4 @@ StyleCopReport.xml
 *.vspscc
 *.vssscc
 .builds
+.qodo
